@@ -1,0 +1,64 @@
+2Sanity Docs:- https://www.sanity.io/learn/course/day-one-with-sanity-studio/prerequisites 
+Sanity Installation :-npm create sanity@latest -- --template clean --create-project "Day one with Sanity" --dataset production --typescript --output-path day-one-with-sanity
+"Day one with Sanity" or you can give here any name i gave "batch54"
+then npm run dev 
+https://sanity.io/manage :- for managing sanity this is your sanity account. I have logged it by gitub.
+schema.ts :- this file is used for structuring, here we do structuring.
+then create product.ts file in sanity instead of product.tsx cuz we aren't importing here we do not import any react component
+
+in product.ts :- import {defineField, defineType} from 'sanity' this form docs in docs creating a schema heading from there you can get code this import is for intelesence to make sure that we aren't doing any mistake 
+pruduct.ts :- we made this file for making eceommerce photo. When you visit https://full-stack-ecommerce-clothing-web.vercel.app/male 
+on above link first we have photo then name then title then price so that's why we created firstly name then title.
+fields:[
+        {                       name title, then title is Title, and it's type is string.
+            name : "title",
+            title :"Title",
+            type :"string",
+        }
+
+after making products.ts and category.ts file go to client.ts which is in lib folder and past this you can get this data from env.ts :-
+export const client = createClient({
+  apiVersion: "2024-05-19",
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  useCdn: true,
+  token: process.env.SANITY_TOKEN, 
+  after this generate token with any name past in .env file 
+  then copy you localhost url and past it into saniyt.io in that past this code in api and click on credentials 
+
+}) you can copy this code from .env.ts such as 2024-05-19 then copy process.env.NEXT_PUBLIC_SANITY_DATASET and so on 
+you can also copy apiVersion from localhost:3000/studio/vision on this website go to vision and copy 2024-05-19 instead of v2024-05-19
+useCdn: true, means through true it will get the data will upload fast 
+we donnot to copy fully env.ts file to client.ts we just copy code as per need for client.ts the reason for not copying fully is that env.ts is our credentials if i upload this on github the secrecy will be out.
+
+then
+sanity.io :- go to that website click on your project class9 then click on api then click on token then generate token with any name i gave batch54 then enter and copy code and paste this code in .env file instead of env.ts such as 
+SANITY_TOKEN= "sk2KuuClL6wc2wU7QFhuWN0dCRyWwL96NxTriZxfddCVU4oOAhqVBJBXKOB1m8Ng5wYqnJsgBX2SdRajXoQoJ2M1DvMwD0E73RiAHyMgFQYxJW97vju00BBJhI4d4YphjwvfG0PO9bR7tEinhMQzO3AD45ckOfiEu1taGp3KEw1sQbzhktfn "
+then 
+call this token in client.ts file such as 
+token: process.env.SANITY_TOKEN,
+
+then
+page.tsx :- we create a async function fto fetch the data from client.ts
+
+GROQ (Graph-Relational Object Queries):- allowing developers to write expressive queries tailored to their specific needs. Some of the key benefits of using GROQ include meansjitna data chya hoga uta fetch hoga GROP ko use krne se 
+While Sanity also has a GraphQL API, most choose to query their Sanity content using GROQ.
+
+*[_type == "event"] get code from sanity docs in docs A taste of GROQ from this heading you can get code *[_type == "event"] but replace event with product cuz our data is saved in product so write 
+*[_type == "product"] past this code in localhost:300/studio, and in this go to product then vision and past this in QUERY and click on fetch on click you get data of product but we need specific data from product so for that specific data fetching we need to write the
+ *[_type == "product"]{title,price,image,category_id,} after writing this again click on fetch so from that you get the specific data.
+
+`*[_type == "product"]{title,price,category->{name},image,"urlImage":image.asset->url,_id}`
+then copy this code 
+
+page.tsx :- write async function to use awati to fetch data and in async function paste this code in this  `` 
+*[_type == "category"]{name,_id
+  ,}
+
+Through client.ts we can fetch our data 
+after that npm run dev 
+
+paste this in next.config.mjs file and run your code 
+ images:{
+        domains:["cdn.sanity.io"]
+    }
